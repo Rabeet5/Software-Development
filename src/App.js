@@ -5,11 +5,10 @@ import AllRoutes from './Screens/AllRoutes/AllRoutes';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <AllRoutes />
-      </header>
-    </div>
+    <>
+      <AllRoutes />
+
+    </>
   );
 }
 

@@ -15,6 +15,8 @@ import {
 }
     from "firebase/database";
 
+
+
 const auth = getAuth(app)
 const db = getDatabase(app)
 
@@ -71,7 +73,61 @@ function SignupUser(obj) {
     })
 }
 
+function CheckAuthentication() {
+
+    return new Promise((resolve, reject) => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const uid = user.uid;
+                resolve(uid)
+            }
+            else {
+                reject()
+            }
+        })
+    })
+}
+
+function LogOutFromDashboard() {
+    return signOut(auth)
+
+}
+
+
+function PostDtInFB(nodename,obj,id,) {
+    
+    return new Promise((resolve, reject) => {
+        if (id) {
+            const reference = ref(db, `${nodename}/${id ? id : ""}/`)
+            set(reference, obj)
+                .then((res) => {
+                    resolve(res)
+                })
+                .catch((err) => {
+                    reject(err)
+                })
+        }
+        else {
+            let keyRef = ref(db, `${nodename}`);
+            obj.id = push(keyRef).key
+
+            let PostRef = ref(db, `${nodename}/${obj.id}`)
+            set(PostRef, obj)
+                .then((res) => {
+                    console.log(res)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
+    })
+
+}
+
 export {
     LoginUser,
     SignupUser,
+    CheckAuthentication,
+    LogOutFromDashboard,
+    PostDtInFB,
 }
