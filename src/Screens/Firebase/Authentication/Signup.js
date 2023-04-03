@@ -10,10 +10,10 @@ function SignUpScreen() {
     const navigate = useNavigate()
 
     const MakeNewUser = () => {
-
+        // setLoader(true)
         SignupUser(usersignup)
             .then((res) => {
-                setLoader(true)
+                // setLoader(false)
                 console.log(res, 'User Created')
                 navigate('/dashboard/*')
             })
@@ -85,6 +85,7 @@ function SignUpScreen() {
                         className="m-3 "
                         color="warning"
                         onClick={MakeNewUser}
+                        
                     >
                         Signup
                     </Button>

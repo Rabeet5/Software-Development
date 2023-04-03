@@ -94,7 +94,7 @@ function LogOutFromDashboard() {
 }
 
 
-function PostDtInFB(nodename,obj,id,) {
+let PostDtInFB =(nodename,obj,id,) => {
     
     return new Promise((resolve, reject) => {
         if (id) {
@@ -124,10 +124,32 @@ function PostDtInFB(nodename,obj,id,) {
 
 }
 
+let GedDtFromFB = (nodename,id) =>{
+
+    const reference = ref(db,`${nodename}/${id ? id : ''}`)
+    return new Promise((resolve, reject) => {
+        onValue(reference,(data)=>{
+            if(data.exists()){
+                if(id){
+                    resolve(data.val())
+                }
+                else{
+                    resolve(Object.values(data.val()))
+                }
+            }
+            else{
+                reject('No Data Found')
+            }
+        })
+    })
+
+}
+
 export {
     LoginUser,
     SignupUser,
     CheckAuthentication,
     LogOutFromDashboard,
     PostDtInFB,
+    GedDtFromFB,
 }
